@@ -1,0 +1,449 @@
+                                                                Shell Scripting in Linux
+1- Creating a Hello world shell script
+bob@caleston-lp10:~$ cd /tmp
+bob@caleston-lp10:/tmp$ touch first-shell-script.sh
+bob@caleston-lp10:/tmp$ vim first-shell-script.sh 
+bob@caleston-lp10:/tmp$ cat first-shell-script.sh 
+#!/bin/bash
+
+echo "Hello world"
+bob@caleston-lp10:/tmp$ ./ first-shell-script.sh 
+-su: ./: Is a directory
+bob@caleston-lp10:/tmp$ ./first-shell-script.sh
+-su: ./first-shell-script.sh: Permission denied
+bob@caleston-lp10:/tmp$ 
+bob@caleston-lp10:/tmp$ ls -ltr
+total 4
+-rw-rw-r-- 1 bob bob 32 Jun 30 13:15 first-shell-script.sh
+bob@caleston-lp10:/tmp$ chmod 777 first-shell-script.sh 
+bob@caleston-lp10:/tmp$ ./first-shell-script.sh
+Hello world
+bob@caleston-lp10:/tmp$ history 
+
+
+2- Writing a shell script for automatically creating a folder/directory and create two files into it 
+bob@caleston-lp10:~$ mkdir my_first_folder
+bob@caleston-lp10:~$ cd my_first_folder/
+bob@caleston-lp10:~/my_first_folder$ ls
+bob@caleston-lp10:~/my_first_folder$ vim sample-shell-script.sh
+bob@caleston-lp10:~/my_first_folder$ ./sample-shell-script.sh
+-su: ./sample-shell-script.sh: Permission denied
+bob@caleston-lp10:~/my_first_folder$ chmod 777 sample-shell-script.sh 
+bob@caleston-lp10:~/my_first_folder$ ./sample-shell-script.sh
+bob@caleston-lp10:~/my_first_folder$ ls 
+harshit  sample-shell-script.sh
+bob@caleston-lp10:~/my_first_folder$ cd harshit/
+bob@caleston-lp10:~/my_first_folder/harshit$ ls
+firstfile  secondfile
+bob@caleston-lp10:~/my_first_folder/harshit$ 
+ 
+( Script content for the above query )
+#!/bin/bash
+
+# Create a file 
+mkdir harshit
+
+# Create two files
+cd harshit
+touch firstfile secondfile
+
+
+3.1 - Making the nodeHealth script
+bob@caleston-lp10:~$ mkdir harshit
+bob@caleston-lp10:~$ cd harshit/
+bob@caleston-lp10:~/harshit$ vim nodeHealth.sh
+bob@caleston-lp10:~/harshit$ chmod 777 nodeHealth.sh 
+bob@caleston-lp10:~/harshit$ ./nodeHealth.sh
+Filesystem      Size  Used Avail Use% Mounted on
+overlay         1.5T  169G  1.3T  13% /
+tmpfs            32G     0   32G   0% /proc/acpi
+devtmpfs         32G     0   32G   0% /dev/tty
+tmpfs            32G     0   32G   0% /proc/scsi
+tmpfs            64M     0   64M   0% /dev
+shm              64M     0   64M   0% /dev/shm
+/dev/root        20G   11G  9.0G  54% /dev/termination-log
+/dev/md127      1.5T  169G  1.3T  13% /lib/modules
+tmpfs            32G     0   32G   0% /sys/fs/cgroup
+tmpfs            32G  8.1M   32G   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           6.3G     0  6.3G   0% /run/user/1000
+              total        used        free      shared  buff/cache   available
+Mem:             62           9           2           0          50          52
+Swap:             0           0           0
+16
+bob@caleston-lp10:~/harshit$ vim nodeHealth.sh 
+bob@caleston-lp10:~/harshit$ cat nodeHealth.sh 
+#!/bin/bash
+
+
+
+##############################
+# Author - Harshit
+# Date - 30/06/2025
+# 
+# The script outputs the node health
+#
+# Version: v1
+##############################
+
+echo "Print the Disk Space"
+df -h
+
+echo "Print the memory"
+free -g
+
+echo "Print the number of cpu"
+nproc
+bob@caleston-lp10:~/harshit$ ./nodeHealth.sh
+Print the Disk Space
+Filesystem      Size  Used Avail Use% Mounted on
+overlay         1.5T  167G  1.3T  12% /
+tmpfs            32G     0   32G   0% /proc/acpi
+devtmpfs         32G     0   32G   0% /dev/tty
+tmpfs            32G     0   32G   0% /proc/scsi
+tmpfs            64M     0   64M   0% /dev
+shm              64M     0   64M   0% /dev/shm
+/dev/root        20G   11G  9.0G  54% /dev/termination-log
+/dev/md127      1.5T  167G  1.3T  12% /lib/modules
+tmpfs            32G     0   32G   0% /sys/fs/cgroup
+tmpfs            32G  8.1M   32G   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           6.3G     0  6.3G   0% /run/user/1000
+Print the memory
+              total        used        free      shared  buff/cache   available
+Mem:             62          10           2           0          50          51
+Swap:             0           0           0
+Print the number of cpu
+16
+bob@caleston-lp10:~/harshit$ 
+
+
+
+
+3.2 - Making the nodeHealth script with the debug mode to make the output clear with commands when the script is run
+bob@caleston-lp10:~/harshit$ cat nodeHealth.sh 
+#!/bin/bash
+
+
+
+##############################
+# Author - Harshit
+# Date - 30/06/2025
+# 
+# The script outputs the node health
+#
+# Version: v1
+##############################
+
+set -x # Debug mode
+
+
+df -h
+
+free -g
+
+nproc
+bob@caleston-lp10:~/harshit$ ./nodeHealth.sh
++ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+overlay         1.5T  172G  1.2T  13% /
+tmpfs            32G     0   32G   0% /proc/acpi
+devtmpfs         32G     0   32G   0% /dev/tty
+tmpfs            32G     0   32G   0% /proc/scsi
+tmpfs            64M     0   64M   0% /dev
+shm              64M     0   64M   0% /dev/shm
+/dev/root        20G   11G  9.0G  54% /dev/termination-log
+/dev/md127      1.5T  172G  1.2T  13% /lib/modules
+tmpfs            32G     0   32G   0% /sys/fs/cgroup
+tmpfs            32G  8.1M   32G   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           6.3G     0  6.3G   0% /run/user/1000
++ free -g
+              total        used        free      shared  buff/cache   available
+Mem:             62           8           3           0          50          53
+Swap:             0           0           0
++ nproc
+16
+bob@caleston-lp10:~/harshit$ 
+
+4 - use grep command along with the scripting for getting some desired results
+  - grep command sends the output of first command to the second command.
+bob@caleston-lp10:~/harshit$ vim test.sh
+bob@caleston-lp10:~/harshit$ ./test.sh | grep 1
+-su: ./test.sh: Permission denied
+bob@caleston-lp10:~/harshit$ chmod 777 test.sh 
+bob@caleston-lp10:~/harshit$ ./test.sh | grep 1
+1
+11
+12
+bob@caleston-lp10:~/harshit$ cat test.sh 
+echo 1
+echo 11
+echo 12
+echo 88
+echo 99
+bob@caleston-lp10:~/harshit$ 
+
+
+5 - Date command sends there output to stdin that's why it is not combining with echo and only echo is executed here
+bob@caleston-lp10:~/harshit$ date
+Mon Jun 30 17:23:42 UTC 2025
+bob@caleston-lp10:~/harshit$ date | echo "Today is:"
+Today is:
+date: write error: Broken pipe
+bob@caleston-lp10:~/harshit$ 
+
+6 - Use of awk command with grep
+  - awk command is used to get the data from the desired column itself
+bob@caleston-lp10:~$ vim test
+bob@caleston-lp10:~$ grep name test
+My name is Harshit
+bob@caleston-lp10:~$ grep name test | awk -F " "  'print{$4}'
+awk: line 1: syntax error at or near print
+grep: write error: Broken pipe
+bob@caleston-lp10:~$ grep name test | awk -F " "  '{print$4}'
+Harshit
+bob@caleston-lp10:~$ cat test
+My name is Harshit
+my emp_id is 112
+bob@caleston-lp10:~$ 
+
+7 - Using set -e, set -o pipefail to check and run the file with errors 
+  - set -e - Will doesn't execute the file if there is a error in the command
+  - set -o pipefail will fetch the errors which occurs while using | as it is might missed by set -e command
+bob@caleston-lp10:~$ vim nodeHealth.sh
+bob@caleston-lp10:~$ ./nodeHealth.sh
+-su: ./nodeHealth.sh: Permission denied
+bob@caleston-lp10:~$ chmod 777 nodeHealth.sh 
+bob@caleston-lp10:~$ ./nodeHealth.sh
++ set -e
++ set -o pipefail
++ df -h
+Filesystem      Size  Used Avail Use% Mounted on
+overlay         1.5T  125G  1.3T   9% /
+tmpfs            32G     0   32G   0% /proc/acpi
+devtmpfs         32G     0   32G   0% /dev/tty
+tmpfs            32G     0   32G   0% /proc/scsi
+tmpfs            64M     0   64M   0% /dev
+shm              64M     0   64M   0% /dev/shm
+/dev/root        20G   10G  9.3G  52% /dev/termination-log
+/dev/md127      1.5T  125G  1.3T   9% /lib/modules
+tmpfs            32G     0   32G   0% /sys/fs/cgroup
+tmpfs            32G  8.1M   32G   1% /run
+tmpfs           5.0M     0  5.0M   0% /run/lock
+tmpfs           6.3G     0  6.3G   0% /run/user/1000
++ free -g
+              total        used        free      shared  buff/cache   available
+Mem:             62           6          20           0          36          55
+Swap:             0           0           0
++ nproc
+16
++ ps -ef
++ grep python
++ awk '-F ' '{print$2}'
+914
+1754
+bob@caleston-lp10:~$ 
+
+8 - curl command is used to fetch the data from the place where it is stored 
+bob@caleston-lp10:~$ curl https://github.com/iam-veeramalla/sandbox/blob/main/log/dummylog01122022.log | grep ERROR
+
+
+9 - wget command will do the same task as curl but it download the file first 
+bob@caleston-lp10:~$ wget bob@caleston-lp10:~$ curl https://github.com/iam-veeramalla/sandbox/blob/main/log/dummylog01122022.log
+--2025-07-01 12:48:17--  ftp://bob@caleston-lp10/~$
+           => '~$'
+Resolving caleston-lp10 (caleston-lp10)... 172.16.238.187, 172.16.239.187, 172.17.0.4
+Connecting to caleston-lp10 (caleston-lp10)|172.16.238.187|:21... failed: Connection refused.
+Connecting to caleston-lp10 (caleston-lp10)|172.16.239.187|:21... failed: Connection refused.
+Connecting to caleston-lp10 (caleston-lp10)|172.17.0.4|:21... failed: Connection refused.
+--2025-07-01 12:48:17--  http://curl/
+Resolving curl (curl)... failed: No address associated with hostname.
+wget: unable to resolve host address 'curl'
+--2025-07-01 12:48:17--  https://github.com/iam-veeramalla/sandbox/blob/main/log/dummylog01122022.log
+Resolving github.com (github.com)... 140.82.112.3
+Connecting to github.com (github.com)|140.82.112.3|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: unspecified [text/html]
+Saving to: 'dummylog01122022.log.1'
+
+dummylog01122022.lo     [ <=>             ] 198.86K  --.-KB/s    in 0.1s    
+
+2025-07-01 12:48:17 (1.99 MB/s) - 'dummylog01122022.log.1' saved [203637]
+
+FINISHED --2025-07-01 12:48:17--
+Total wall clock time: 0.7s
+Downloaded: 1 files, 199K in 0.1s (1.99 MB/s)
+bob@caleston-lp10:~$ 
+bob@caleston-lp10:~$ ls
+caleston-code.tar.gz  dummylog01122022.log.1  nodeHealth.sh
+dummylog01122022.log  media                   test
+bob@caleston-lp10:~$
+
+10 - Find command is used to find a file in a Linux using its name from root user 
+bob@caleston-lp10:~$ sudo find / -name gai.conf
+
+
+
+
+
+11 - Using the if else and for loop 
+bob@caleston-lp10:~$ vim ifelse.sh
+bob@caleston-lp10:~$ cat ifelse.sh 
+
+
+
+
+a=4
+b=10
+
+if [$a > $b]
+then 
+    echo "a is greater than b"
+else
+        echo "b is greater than a"
+fi
+bob@caleston-lp10:~$ ./ifelse.sh
+-su: ./ifelse.sh: Permission denied
+bob@caleston-lp10:~$ chmod 777
+chmod: missing operand after '777'
+Try 'chmod --help' for more information.
+bob@caleston-lp10:~$ chmod 777 ifelse.sh 
+bob@caleston-lp10:~$ ./ifelse.sh
+./ifelse.sh: line 8: [4: command not found
+b is greater than a
+bob@caleston-lp10:~$ vim ifelse.sh 
+bob@caleston-lp10:~$ ./ifelse.sh
+./ifelse.sh: line 8: [4: command not found
+b is greater than a
+bob@caleston-lp10:~$ vim ifelse.sh 
+bob@caleston-lp10:~$ ./ifelse.sh
+./ifelse.sh: line 8: [4: command not found
+b is greater than a
+bob@caleston-lp10:~$ vim for.sh
+bob@caleston-lp10:~$ ./for.sh
+-su: ./for.sh: Permission denied
+bob@caleston-lp10:~$ chmod 777 for.sh
+bob@caleston-lp10:~$ ./for.sh
+
+bob@caleston-lp10:~$ vim for.sh
+bob@caleston-lp10:~$ ./for.sh
+{1.100}
+bob@caleston-lp10:~$ vim for.sh
+bob@caleston-lp10:~$ ./for.sh
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+bob@caleston-lp10:~$ cat for.sh 
+
+
+
+
+for i in {1..100}; do echo $i; done
+bob@caleston-lp10:~$ 
+
+
+
+
+
+
+
+
+

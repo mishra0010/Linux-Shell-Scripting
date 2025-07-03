@@ -1,0 +1,22 @@
+bob@caleston-lp10:~/myscripts$ vim 02_comments.sh
+
+inside vim (
+#!/bin/bash
+
+echo "This is a single line comment written using #"
+# single line comment
+
+echo "This is a multiline commemnt written using <<comment....comment"
+
+<<comment
+This is 
+a multi line comment 
+in shell
+scripting
+comment
+)
+
+bob@caleston-lp10:~/myscripts$ chmod 777 02_comments.sh 
+bob@caleston-lp10:~/myscripts$ ./02_comments.sh
+This is a single line comment written using #
+This is a multiline commemnt written using <<comment....comment

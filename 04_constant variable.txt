@@ -1,0 +1,21 @@
+bob@caleston-lp10:~$ vim constantvar.sh
+
+
+
+inside vim (
+#!/bin/bash
+
+readonly name="Harshit"
+
+echo "Name is $name"
+
+name="Harshit Mishra"
+
+echo "New name is $name"
+)
+
+bob@caleston-lp10:~$ chmod 777 constantvar.sh 
+bob@caleston-lp10:~$ ./constantvar.sh
+Name is Harshit
+./constantvar.sh: line 7: name: readonly variable
+New name is Harshit

@@ -1,0 +1,25 @@
+bob@caleston-lp10:~$ vim 03_vardemo.sh 
+
+inside vim (
+#!/bin/bash
+
+# Script to show variables
+
+a=10
+name="Harshit"
+age=22
+
+echo "My name is $name and my age is $age"
+echo "I got $a marks in maths"
+
+# variable to store the output of a command 
+HOSTNAME=$(hostname)
+echo "Name of this host is $HOSTNAME"
+
+)
+
+bob@caleston-lp10:~$ chmod +x 03_vardemo.sh 
+bob@caleston-lp10:~$ ./03_vardemo.sh
+My name is Harshit and my age is 22
+I got 10 marks in maths
+Name of this host is caleston-lp10

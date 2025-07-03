@@ -1,0 +1,10 @@
+bob@caleston-lp10:~/myscripts$ vim 01_basics.sh
+
+inside vim (
+#!/bin/bash
+echo "Hello World"
+)
+
+bob@caleston-lp10:~/myscripts$ chmod 777 01_basics.sh
+bob@caleston-lp10:~/myscripts$ ./01_basics.sh
+Hello World

@@ -1,0 +1,36 @@
+bob@caleston-lp10:~$ vim array.sh 
+
+inside vim (
+
+#!/bin/bash
+
+myArray=(10 20 30.5 Hello "Hello Buddy")
+
+echo "All values in array are ${myArray[*]}"
+
+echo "Value at index 3rd is ${myArray[3]}"
+
+
+# How to find the length of an array 
+
+echo "Length of the array is ${#myArray[*]}"
+
+# Fetching Values of array from given index and number of values to pe print from that index 
+
+echo "Values from index 2-3 ${myArray[*]:2:2}"
+
+# Updating the values of the array now 
+
+myArray=(New 11 21 "Good Luck")
+echo "Updated Values of myArray are : ${myArray[*]}"
+
+
+)
+
+bob@caleston-lp10:~$ ./array.sh
+All values in array are 10 20 30.5 Hello Hello Buddy
+Value at index 3rd is Hello
+Length of the array is 5
+Values from index 2-3 30.5 Hello
+Updated Values of myArray are : New 11 21 Good Luck
+bob@caleston-lp10:~$ 

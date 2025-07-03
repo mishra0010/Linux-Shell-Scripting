@@ -1,0 +1,23 @@
+bob@caleston-lp10:~$ vim 06_keyvalue.sh
+
+Inside vim (
+
+#!/bin/bash
+
+# How to store the key Value Pairs 
+
+declare -A myArray
+myArray=( [name]=paul [age]=20 )
+
+echo "My name is : ${myArray[name]}"
+echo "My age is : ${myArray[age]}"
+
+)
+
+bob@caleston-lp10:~$ chmod +x 06_keyvalue.sh 
+bob@caleston-lp10:~$ ./06_keyvalue.sh
+
+Output - 
+
+My name is : paul
+My age is : 20
