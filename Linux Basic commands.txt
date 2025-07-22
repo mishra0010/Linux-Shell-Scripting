@@ -1,0 +1,401 @@
+root@mishra-pc:~# ls
+LINUX_PRAC  linux_practice
+root@mishra-pc:~# rm -r linux_practice/
+root@mishra-pc:~# ls
+LINUX_PRAC
+root@mishra-pc:~# mkdir linux_practice
+root@mishra-pc:~# cd linux_practice/
+root@mishra-pc:~/linux_practice# ls
+root@mishra-pc:~/linux_practice# nano hello.txt
+root@mishra-pc:~/linux_practice# cat hello.txt
+H
+E
+L
+L
+O
+W
+O
+R
+L
+D
+!
+root@mishra-pc:~/linux_practice# pwd
+/root/linux_practice
+root@mishra-pc:~/linux_practice# cp /root/linux_practice/hello.txt /root/LINUX_PRAC
+root@mishra-pc:~/linux_practice# cd ..
+root@mishra-pc:~# ls
+LINUX_PRAC  linux_practice
+root@mishra-pc:~# cd LINUX_PRAC/
+root@mishra-pc:~/LINUX_PRAC# l
+hello.txt
+root@mishra-pc:~/LINUX_PRAC# echo hello.txt
+hello.txt
+root@mishra-pc:~/LINUX_PRAC# cat hello.txt
+H
+E
+L
+L
+O
+W
+O
+R
+L
+D
+!
+root@mishra-pc:~/LINUX_PRAC# rm hello.txt
+root@mishra-pc:~/LINUX_PRAC# ls
+root@mishra-pc:~/LINUX_PRAC# cd ..
+root@mishra-pc:~# cd linux_practice/
+root@mishra-pc:~/linux_practice# ls
+hello.txt
+root@mishra-pc:~/linux_practice# cp hello.txt /root/LINUX_PRAC
+root@mishra-pc:~/linux_practice# cd ..
+root@mishra-pc:~# cd LINUX_PRAC/
+root@mishra-pc:~/LINUX_PRAC# ls
+hello.txt
+root@mishra-pc:~/LINUX_PRAC# cat hello.txt
+H
+E
+L
+L
+O
+W
+O
+R
+L
+D
+!
+root@mishra-pc:~/LINUX_PRAC# rm hello.txt
+root@mishra-pc:~/LINUX_PRAC# ls
+root@mishra-pc:~/LINUX_PRAC# cd ..
+root@mishra-pc:~# cp /linux_practice/hello.txt /LINUX_PRAC
+cp: cannot stat '/linux_practice/hello.txt': No such file or directory
+root@mishra-pc:~# cp /root/linux_practice/hello.txt  /root/LINUX_PRAC
+root@mishra-pc:~# cd ;
+
+
+
+
+
+
+
+
+
+=====================================================================================================================================================================
+
+
+
+
+root@mishra-pc:~# ls
+LINUX_PRAC  linux_practice
+root@mishra-pc:~# cd LINUX_PRAC/
+root@mishra-pc:~/LINUX_PRAC# ls
+hello.txt
+root@mishra-pc:~/LINUX_PRAC# cat hello.txt
+H
+E
+L
+L
+O
+W
+O
+R
+L
+D
+!
+root@mishra-pc:~/LINUX_PRAC# touch touch.txt
+root@mishra-pc:~/LINUX_PRAC# ls
+hello.txt  touch.txt
+root@mishra-pc:~/LINUX_PRAC# echo "This is a touch created file" touch.txt
+This is a touch created file touch.txt
+root@mishra-pc:~/LINUX_PRAC# ls
+hello.txt  touch.txt
+root@mishra-pc:~/LINUX_PRAC# cat touch.txt
+root@mishra-pc:~/LINUX_PRAC# echo "This is a touch created file" > touch.txt
+root@mishra-pc:~/LINUX_PRAC# cat touch.txt
+This is a touch created file
+root@mishra-pc:~/LINUX_PRAC# nano nano.txt
+root@mishra-pc:~/LINUX_PRAC# cat nano.txt
+Great! Below is a **sample of demo data (about 4 pages worth)** covering key **Linux commands**, complete with:
+
+* ✅ Command
+* 📝 Description
+* 🧪 Example usage
+* ⚙️ Suggested hands-on exercise
+
+---
+
+### 📂 **1. File and Directory Commands**
+
+| Command | Description                 | Example                   | Exercise                                          |
+| ------- | --------------------------- | ------------------------- | ------------------------------------------------- |
+| `pwd`   | Print working directory     | `pwd`                     | Open terminal and check your current directory    |
+| `ls`    | List files in a directory   | `ls -l`                   | Create a directory, add files, list with `ls -la` |
+| `cd`    | Change directory            | `cd /etc`                 | Navigate to different system folders              |
+| `mkdir` | Make new directory          | `mkdir devops_project`    | Create a practice project folder                  |
+| `touch` | Create empty file           | `touch file1.txt`         | Create multiple empty files for testing           |
+| `cp`    | Copy files or directories   | `cp file1.txt backup.txt` | Backup an existing file                           |
+| `mv`    | Move or rename files        | `mv backup.txt file2.txt` | Rename a file                                     |
+| `rm`    | Remove files or directories | `rm file2.txt`            | Try deleting a file (be careful!)                 |
+
+---
+
+### 🔧 **2. File Viewing & Text Processing**
+
+| Command        | Description                  | Example                       | Exercise                          |
+| -------------- | ---------------------------- | ----------------------------- | --------------------------------- |
+| `cat`          | View file contents           | `cat file1.txt`               | Write a note in file and view it  |
+| `more`, `less` | View long files page by page | `less /etc/passwd`            | Open system files and navigate    |
+| `head`         | Show top lines               | `head -n 5 /etc/passwd`       | View top 5 lines of any file      |
+| `tail`         | Show last lines              | `tail -n 10 /etc/passwd`      | Watch last 10 lines change        |
+| `grep`         | Search text in files         | `grep "root" /etc/passwd`     | Search for any string in a file   |
+| `wc`           | Count words, lines, chars    | `wc -l file1.txt`             | Count lines in a file you created |
+| `cut`          | Cut columns from file        | `cut -d ':' -f 1 /etc/passwd` | Extract usernames from passwd     |
+
+---
+
+### 🔒 **3. User Management**
+
+| Command   | Description         | Example                         | Exercise                     |
+| --------- | ------------------- | ------------------------------- | ---------------------------- |
+| `whoami`  | Show current user   | `whoami`                        | Check your username          |
+| `id`      | Show UID/GID info   | `id`                            | View user groups             |
+| `adduser` | Add a new user      | `sudo adduser devuser`          | Create a new user            |
+| `passwd`  | Set/change password | `sudo passwd devuser`           | Set a password for that user |
+| `usermod` | Modify user info    | `sudo usermod -aG sudo devuser` | Give sudo access             |
+| `deluser` | Remove user         | `sudo deluser devuser`          | Delete test user you created |
+
+---
+
+### 📡 **4. Networking**
+
+| Command   | Description         | Example                             | Exercise                  |
+| --------- | ------------------- | ----------------------------------- | ------------------------- |
+| `ip a`    | Show IP addresses   | `ip a`                              | See your system’s IP info |
+| `ping`    | Check connectivity  | `ping google.com`                   | Ping a public server      |
+| `netstat` | Network connections | `netstat -tulnp`                    | View open ports           |
+| `curl`    | Get data from web   | `curl http://example.com`           | Fetch a webpage from CLI  |
+| `wget`    | Download files      | `wget https://example.com/file.txt` | Try downloading a file    |
+
+---
+
+Would you like me to generate this into a **PDF**, **continue with more (like 50 full pages worth)**, or turn this into an **interactive Linux workbook** with exercises and projects?
+
+Let me know how you'd like to proceed!
+
+root@mishra-pc:~/LINUX_PRAC# less nano.txt
+root@mishra-pc:~/LINUX_PRAC# more nano.txt
+Great! Below is a **sample of demo data (about 4 pages worth)** covering key **Linux commands**, complete with:
+
+* ✅ Command
+* 📝 Description
+* 🧪 Example usage
+* ⚙️ Suggested hands-on exercise
+
+---
+
+### 📂 **1. File and Directory Commands**
+
+| Command | Description                 | Example                   | Exercise                                          |
+| ------- | --------------------------- | ------------------------- | ------------------------------------------------- |
+| `pwd`   | Print working directory     | `pwd`                     | Open terminal and check your current directory    |
+| `ls`    | List files in a directory   | `ls -l`                   | Create a directory, add files, list with `ls -la` |
+| `cd`    | Change directory            | `cd /etc`                 | Navigate to different system folders              |
+| `mkdir` | Make new directory          | `mkdir devops_project`    | Create a practice project folder                  |
+| `touch` | Create empty file           | `touch file1.txt`         | Create multiple empty files for testing           |
+| `cp`    | Copy files or directories   | `cp file1.txt backup.txt` | Backup an existing file                           |
+| `mv`    | Move or rename files        | `mv backup.txt file2.txt` | Rename a file                                     |
+| `rm`    | Remove files or directories | `rm file2.txt`            | Try deleting a file (be careful!)                 |
+
+---
+
+### 🔧 **2. File Viewing & Text Processing**
+
+| Command        | Description                  | Example                       | Exercise                          |
+| -------------- | ---------------------------- | ----------------------------- | --------------------------------- |
+| `cat`          | View file contents           | `cat file1.txt`               | Write a note in file and view it  |
+| `more`, `less` | View long files page by page | `less /etc/passwd`            | Open system files and navigate    |
+| `head`         | Show top lines               | `head -n 5 /etc/passwd`       | View top 5 lines of any file      |
+| `tail`         | Show last lines              | `tail -n 10 /etc/passwd`      | Watch last 10 lines change        |
+| `grep`         | Search text in files         | `grep "root" /etc/passwd`     | Search for any string in a file   |
+| `wc`           | Count words, lines, chars    | `wc -l file1.txt`             | Count lines in a file you created |
+| `cut`          | Cut columns from file        | `cut -d ':' -f 1 /etc/passwd` | Extract usernames from passwd     |
+
+---
+
+### 🔒 **3. User Management**
+
+| Command   | Description         | Example                         | Exercise                     |
+| --------- | ------------------- | ------------------------------- | ---------------------------- |
+| `whoami`  | Show current user   | `whoami`                        | Check your username          |
+| `id`      | Show UID/GID info   | `id`                            | View user groups             |
+| `adduser` | Add a new user      | `sudo adduser devuser`          | Create a new user            |
+| `passwd`  | Set/change password | `sudo passwd devuser`           | Set a password for that user |
+| `usermod` | Modify user info    | `sudo usermod -aG sudo devuser` | Give sudo access             |
+| `deluser` | Remove user         | `sudo deluser devuser`          | Delete test user you created |
+
+---
+
+### 📡 **4. Networking**
+
+| Command   | Description         | Example                             | Exercise                  |
+| --------- | ------------------- | ----------------------------------- | ------------------------- |
+| `ip a`    | Show IP addresses   | `ip a`                              | See your system’s IP info |
+| `ping`    | Check connectivity  | `ping google.com`                   | Ping a public server      |
+| `netstat` | Network connections | `netstat -tulnp`                    | View open ports           |
+| `curl`    | Get data from web   | `curl http://example.com`           | Fetch a webpage from CLI  |
+| `wget`    | Download files      | `wget https://example.com/file.txt` | Try downloading a file    |
+
+---
+
+Would you like me to generate this into a **PDF**, **continue with more (like 50 full pages worth)**, or turn this into an **interactive Linux workbook** with exercises and projects?
+
+Let me know how you'd like to proceed!
+
+root@mishra-pc:~/LINUX_PRAC# head nano.txt
+Great! Below is a **sample of demo data (about 4 pages worth)** covering key **Linux commands**, complete with:
+
+* ✅ Command
+* 📝 Description
+* 🧪 Example usage
+* ⚙️ Suggested hands-on exercise
+
+---
+
+### 📂 **1. File and Directory Commands**
+root@mishra-pc:~/LINUX_PRAC# tail nano.txt
+| `netstat` | Network connections | `netstat -tulnp`                    | View open ports           |
+| `curl`    | Get data from web   | `curl http://example.com`           | Fetch a webpage from CLI  |
+| `wget`    | Download files      | `wget https://example.com/file.txt` | Try downloading a file    |
+
+---
+
+Would you like me to generate this into a **PDF**, **continue with more (like 50 full pages worth)**, or turn this into an **interactive Linux workbook** with exercises and projects?
+
+Let me know how you'd like to proceed!
+
+
+===============================================================================================================================================
+
+
+
+
+
+root@mishra-pc:~# ls
+LINUX_PRAC  linux_practice
+root@mishra-pc:~# find /LINUX_PRAC nano.txt
+find: ‘/LINUX_PRAC’: No such file or directory
+find: ‘nano.txt’: No such file or directory
+root@mishra-pc:~# cd LINUX_PRAC/
+root@mishra-pc:~/LINUX_PRAC# ls
+hello.txt  nano.txt  touch.txt
+root@mishra-pc:~/LINUX_PRAC# find . -name "nano.txt"
+./nano.txt
+root@mishra-pc:~/LINUX_PRAC# cd ..
+root@mishra-pc:~# find . -name "nano.txt"
+./LINUX_PRAC/nano.txt
+root@mishra-pc:~# find . -name "nano1.txt"
+root@mishra-pc:~# locate nano.txt
+Command 'locate' not found, did you mean:
+  command 'locale' from deb libc-bin (2.39-0ubuntu8.3)
+Try: apt install <deb name>
+root@mishra-pc:~# cp LINUX_PRAC/nano.txt /linux_practice
+root@mishra-pc:~# cd linux_practice/
+root@mishra-pc:~/linux_practice# ls
+hello.txt
+root@mishra-pc:~/linux_practice# ls
+hello.txt
+root@mishra-pc:~/linux_practice# cd linux_practice/
+-bash: cd: linux_practice/: No such file or directory
+root@mishra-pc:~/linux_practice# cp LINUX_PRAC/nano.txt /linux_practice
+cp: cannot stat 'LINUX_PRAC/nano.txt': No such file or directory
+root@mishra-pc:~/linux_practice# cp /LINUX_PRAC/nano.txt /linux_practice
+cp: cannot stat '/LINUX_PRAC/nano.txt': No such file or directory
+root@mishra-pc:~/linux_practice# cp /root/LINUX_PRAC/nano.txt /root/linux_practice
+root@mishra-pc:~/linux_practice# cd linux_practice/
+-bash: cd: linux_practice/: No such file or directory
+root@mishra-pc:~/linux_practice# ls
+hello.txt  nano.txt
+root@mishra-pc:~/linux_practice# cd ..
+root@mishra-pc:~# find . -name "nano.txt"
+./LINUX_PRAC/nano.txt
+./linux_practice/nano.txt
+root@mishra-pc:~# cd linux_practice/
+root@mishra-pc:~/linux_practice# mkdir sop
+root@mishra-pc:~/linux_practice# ls
+hello.txt  nano.txt  sop
+root@mishra-pc:~/linux_practice# cd ..
+
+
+=============================================================================================================================================
+
+
+
+
+root@mishra-pc:~# du -h LINUX_PRAC
+8.0K    LINUX_PRAC
+root@mishra-pc:~# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+rootfs          384G  112G  272G  30% /
+none            384G  112G  272G  30% /dev
+none            384G  112G  272G  30% /run
+none            384G  112G  272G  30% /run/lock
+none            384G  112G  272G  30% /run/shm
+none            384G  112G  272G  30% /run/user
+tmpfs           384G  112G  272G  30% /sys/fs/cgroup
+C:\             384G  112G  272G  30% /mnt/c
+E:\             196G  2.6G  193G   2% /mnt/e
+F:\             176G  673M  176G   1% /mnt/f
+G:\             176G   51G  125G  29% /mnt/g
+root@mishra-pc:~# du LINUX_PRAC
+8       LINUX_PRAC
+root@mishra-pc:~# du
+0       ./.local/share/nano
+0       ./.local/share
+0       ./.local
+0       ./.ssh
+8       ./LINUX_PRAC
+0       ./linux_practice/sop
+8       ./linux_practice
+40      .
+
+root@mishra-pc:~# stat /root/LINUX_PRAC/nano.txt
+  File: /root/LINUX_PRAC/nano.txt
+  Size: 4418            Blocks: 16         IO Block: 4096   regular file
+Device: 0,2     Inode: 14355223812336257  Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+Access: 2025-06-04 14:30:56.741086200 +0000
+Modify: 2025-06-04 14:07:42.694357900 +0000
+Change: 2025-06-04 14:07:42.694357900 +0000
+ Birth: -
+root@mishra-pc:~# stat /LINUX_PRAC/nano.txt
+stat: cannot statx '/LINUX_PRAC/nano.txt': No such file or directory
+root@mishra-pc:~# cd linux_practice/
+root@mishra-pc:~/linux_practice# ls
+hello.txt  nano.txt  sop
+root@mishra-pc:~/linux_practice# cd ..
+root@mishra-pc:~# tree /sop
+Command 'tree' not found, did you mean:
+  command 'tee' from deb coreutils (9.4-2ubuntu2)
+  command 'true' from deb coreutils (9.4-2ubuntu2)
+  command 'free' from deb procps (2:4.0.4-4ubuntu3.2)
+  command 'ttree' from deb libtemplate-perl (2.27-1build7)
+Try: apt install <deb name>
+root@mishra-pc:~#
+
+
+
+================================================================================================================
+                                                        
+
+
+
+
+
+
+
+
+
+
+
+

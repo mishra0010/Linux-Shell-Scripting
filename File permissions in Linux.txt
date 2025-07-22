@@ -1,0 +1,296 @@
+                                                                                      FILE PERMISSIONS IN LINUX 
+
+1.1- Added a user da1
+root@mishra-pc:/# adduser da1
+info: Adding user `da1' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Adding new group `da1' (1010) ...
+info: Adding new user `da1' (1010) with group `da1 (1010)' ...
+info: Creating home directory `/home/da1' ...
+info: Copying files from `/etc/skel' ...
+New password:
+
+1.2 - Added a user da2
+root@mishra-pc:/# adduser da2
+info: Adding user `da2' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Adding new group `da2' (1012) ...
+info: Adding new user `da2' (1012) with group `da2 (1012)' ...
+info: Creating home directory `/home/da2' ...
+info: Copying files from `/etc/skel' ...
+New password:
+
+2.1- Created a file from user da2 in temp folder
+root@mishra-pc:~# su da2
+da2@mishra-pc:/root$ cd /tmp
+da2@mishra-pc:/tmp$ vim helloworld.sh
+da2@mishra-pc:/tmp$ ls -ltr
+total 20
+-rw-r--r-- 1 root root 18703 Jun 16 17:35 python-file.txt
+-rw-r--r-- 1 root root   125 Jun 17 12:39 ui
+-rw-rw-r-- 1 da2  da2     31 Jun 17 13:19 helloworld.sh
+da2@mishra-pc:/tmp$
+
+2.2 - Trying to update or delete the file from da1 
+root@mishra-pc:/# su da1
+da1@mishra-pc:/$ cd /tmp
+da1@mishra-pc:/tmp$ ls -ltr
+total 20
+-rw-r--r-- 1 root root 18703 Jun 16 17:35 python-file.txt
+-rw-r--r-- 1 root root   125 Jun 17 12:39 ui
+-rw-rw-r-- 1 da2  da2     31 Jun 17 13:19 helloworld.sh
+da1@mishra-pc:/tmp$ cat helloworld.sh
+#!/bin/bash
+echo "hello world"
+da1@mishra-pc:/tmp$ vim helloworld.sh
+da1@mishra-pc:/tmp$
+
+"helloworld.sh"
+"helloworld.sh" E212: Can't open file for writing
+Press ENTER or type command to continue
+
+da1@mishra-pc:/tmp$ rm helloworld.sh
+rm: remove write-protected regular file 'helloworld.sh'? yes
+rm: cannot remove 'helloworld.sh': Operation not permitted
+da1@mishra-pc:/tmp$
+
+3.1 - Changed the reading permission from da2 of a file 
+da2@mishra-pc:/tmp$ chmod o= helloworld.sh
+da2@mishra-pc:/tmp$
+
+3.2 - Trying to read that file from da1
+da1@mishra-pc:/tmp$ cat helloworld.sh
+cat: helloworld.sh: Permission denied
+da1@mishra-pc:/tmp$
+
+4.1 - Changing the execute permission of a file for user (da2)
+da2@mishra-pc:/tmp$ ./helloworld.sh
+bash: ./helloworld.sh: Permission denied
+da2@mishra-pc:/tmp$ chmod u=rwx helloworld.sh
+da2@mishra-pc:/tmp$ ./helloworld.sh
+hello world
+da2@mishra-pc:/tmp$
+
+4.2 - Changing the permission for the other user from (da2)
+da2@mishra-pc:/tmp$ chmod o=rwx helloworld.sh
+da2@mishra-pc:/tmp$
+
+4.3 - Trying from da1 to perform action after getting permissions from da2
+da1@mishra-pc:/tmp$ cat helloworld.sh
+#!/bin/bash
+echo "hello world"
+da1@mishra-pc:/tmp$ ./helloworld.sh
+hello world
+da1@mishra-pc:/tmp$ cat helloworld.sh
+#!/bin/bash
+echo "hello world from da1"
+da1@mishra-pc:/tmp$
+
+
+Note -
+
+u - user
+g - group
+o - other
+
+r - read    4
+w - write   2
+x - execute 1
+ 
+(777) - means you have all the permissions for user, group, other
+(666) - means you have read and write permission only for all user, group, other
+(400) - means you have only read permission for user only and no permission to group, other
+
+        {    u=rwx, g=rw, o=r
+chmod -
+        {   764 file
+
+
+
+
+                                           Same things trying on directory 
+
+
+
+4.4 - Now trying to access the directory of da2 from da1 
+da2@mishra-pc:/$ cd ~
+da2@mishra-pc:~$ pwd
+/home/da2
+
+da1@mishra-pc:/tmp$ cd /home
+da1@mishra-pc:/home$ cd da2
+bash: cd: da2: Permission denied
+da1@mishra-pc:/home$
+
+
+4.5 - Now giving permission to da1 to access da2 directory 
+da2@mishra-pc:/home$ ls -ltr
+total 0
+drwxr-x--- 1 sidnaikua sidnaikua 4096 Jun  5 12:57 sidnaikua
+drwxr-x--x 1 sahilau   sahilau   4096 Jun  5 14:25 sahilau
+drwxr-x--- 1 harshitau harshitau 4096 Jun  7 07:58 harshitau
+drwxr-x--- 1 manimeow  manimeow  4096 Jun  7 09:02 manimeow
+drwxr-x--- 1 da2       da2       4096 Jun 17 13:19 da2
+drwxr-x--- 1 da1       da1       4096 Jun 17 14:03 da1
+da2@mishra-pc:/home$ chmod 757 da2
+da2@mishra-pc:/home$
+
+da1@mishra-pc:/home$ cd da2
+da1@mishra-pc:/home/da2$ ls -ltr
+total 0
+
+4.6 - Now creating a file in da2 from da1 
+da1@mishra-pc:/home/da2$ touch test
+da1@mishra-pc:/home/da2$
+da2@mishra-pc:~$ ls
+test
+da2@mishra-pc:~$ ls -ltr
+total 0
+-rw-rw-r-- 1 da1 da1 0 Jun 21 08:29 test
+da2@mishra-pc:~$
+
+
+                                                                   CHOWN - change owner (making a different owner for current file )
+
+
+4.7 - chnaging the owner of a file 
+da2@mishra-pc:/tmp$ touch changedownerfile.sh
+da2@mishra-pc:/tmp$ cd ~
+da2@mishra-pc:~$ exit
+exit
+root@mishra-pc:/tmp# chown da1:da1 changedownerfile.sh
+root@mishra-pc:/tmp# ls -ltr
+total 20
+-rw-r--r-- 1 root root 18703 Jun 16 17:35 python-file.txt
+-rw-r--r-- 1 root root   125 Jun 17 12:39 ui
+-rwxrw-rwx 1 da2  da2     40 Jun 17 14:03 helloworld.sh
+-rw-rw-r-- 1 da1  da1      0 Jun 21 08:37 changedownerfile.sh
+root@mishra-pc:/tmp#
+ 
+
+                                                                                    File inide a folder concept 
+
+
+
+
+4.8 - removing the permission of tmp folder and giving all permission to its one file , for checking can we access it or not
+root@mishra-pc:/# ls -ltr
+total 640
+drwxr-xr-x  1 root root   4096 Feb 26  2024 bin.usr-is-merged
+drwxr-xr-x  1 root root   4096 Mar 31  2024 sbin.usr-is-merged
+drwxr-xr-x  1 root root   4096 Apr  8  2024 lib.usr-is-merged
+lrwxrwxrwx  1 root root      8 Apr 22  2024 sbin -> usr/sbin
+lrwxrwxrwx  1 root root      9 Apr 22  2024 lib64 -> usr/lib64
+lrwxrwxrwx  1 root root      7 Apr 22  2024 lib -> usr/lib
+drwxr-xr-x  1 root root   4096 Apr 22  2024 boot
+lrwxrwxrwx  1 root root      7 Apr 22  2024 bin -> usr/bin
+-rwxr-xr-x  1 root root 644432 May  4  2024 init
+drwxr-xr-x  1 root root   4096 Oct 11  2024 snap
+drwxr-xr-x  1 root root   4096 Jan  6 20:13 srv
+drwxr-xr-x  1 root root   4096 Jan  6 20:13 opt
+drwxr-xr-x  1 root root   4096 Jan  6 20:13 media
+drwxr-xr-x  1 root root   4096 Jan  6 20:15 var
+drwxr-xr-x  1 root root   4096 May 28 17:04 mnt
+drwxr-xr-x  1 root root   4096 May 29 13:33 usr
+-rw-r--r--  1 root root   4418 Jun  4 14:29 linux_practice
+drwx------  1 root root   4096 Jun 17 12:15 root
+drwxr-xr-x  1 root root   4096 Jun 17 13:13 home
+dr-xr-xr-x 12 root root      0 Jun 21 08:01 sys
+dr-xr-xr-x  9 root root      0 Jun 21 08:01 proc
+drwxr-xr-x  1 root root   4096 Jun 21 08:02 etc
+drwxr-xr-x  1 root root   4096 Jun 21 08:02 run
+drwxr-xr-x  1 root root   4096 Jun 21 08:14 dev
+drwxrwxrwt  1 root root   4096 Jun 21 08:37 tmp
+root@mishra-pc:/# cd /tmp
+root@mishra-pc:/tmp# chmod 700 /tmp
+root@mishra-pc:/tmp# cd /tmp
+root@mishra-pc:/tmp# vim folderfileconcept
+root@mishra-pc:/tmp# cat folderfileconcept
+File is
+inside
+the
+folder
+so first we
+should have the permission of entering into the
+folder then only we can access the
+files into it ,
+if we have access of file
+but not the folder in which it
+is present , also you can't access the file itself
+root@mishra-pc:/tmp# chmod 777 folderfileconcept
+root@mishra-pc:/tmp# ls -ltr
+total 20
+-rw-r--r-- 1 root root 18703 Jun 16 17:35 python-file.txt
+-rw-r--r-- 1 root root   125 Jun 17 12:39 ui
+-rwxrw-rwx 1 da2  da2     40 Jun 17 14:03 helloworld.sh
+-rw-rw-r-- 1 da1  da1      0 Jun 21 08:37 changedownerfile.sh
+-rwxrwxrwx 1 root root   255 Jun 21 10:45 folderfileconcept
+root@mishra-pc:/tmp# cd ..
+root@mishra-pc:/# ls -ltr
+total 640
+drwxr-xr-x  1 root root   4096 Feb 26  2024 bin.usr-is-merged
+drwxr-xr-x  1 root root   4096 Mar 31  2024 sbin.usr-is-merged
+drwxr-xr-x  1 root root   4096 Apr  8  2024 lib.usr-is-merged
+lrwxrwxrwx  1 root root      8 Apr 22  2024 sbin -> usr/sbin
+lrwxrwxrwx  1 root root      9 Apr 22  2024 lib64 -> usr/lib64
+lrwxrwxrwx  1 root root      7 Apr 22  2024 lib -> usr/lib
+drwxr-xr-x  1 root root   4096 Apr 22  2024 boot
+lrwxrwxrwx  1 root root      7 Apr 22  2024 bin -> usr/bin
+-rwxr-xr-x  1 root root 644432 May  4  2024 init
+drwxr-xr-x  1 root root   4096 Oct 11  2024 snap
+drwxr-xr-x  1 root root   4096 Jan  6 20:13 srv
+drwxr-xr-x  1 root root   4096 Jan  6 20:13 opt
+drwxr-xr-x  1 root root   4096 Jan  6 20:13 media
+drwxr-xr-x  1 root root   4096 Jan  6 20:15 var
+drwxr-xr-x  1 root root   4096 May 28 17:04 mnt
+drwxr-xr-x  1 root root   4096 May 29 13:33 usr
+-rw-r--r--  1 root root   4418 Jun  4 14:29 linux_practice
+drwxr-xr-x  1 root root   4096 Jun 17 13:13 home
+dr-xr-xr-x 12 root root      0 Jun 21 08:01 sys
+dr-xr-xr-x  9 root root      0 Jun 21 08:01 proc
+drwxr-xr-x  1 root root   4096 Jun 21 08:02 etc
+drwxr-xr-x  1 root root   4096 Jun 21 08:02 run
+drwxr-xr-x  1 root root   4096 Jun 21 08:14 dev
+drwx------  1 root root   4096 Jun 21 10:45 root
+drwx------  1 root root   4096 Jun 21 10:45 tmp
+
+
+root@mishra-pc:/# su da1
+da1@mishra-pc:/$ cd /tmp
+bash: cd: /tmp: Permission denied
+da1@mishra-pc:/$
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

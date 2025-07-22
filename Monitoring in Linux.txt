@@ -1,0 +1,60 @@
+                                                                          Monitoring in Linux 
+
+1 - CPU
+1.1 - To view the real time memory and cpu utilistion of a process 
+root@mishra-pc:/# top
+top - 13:27:10 up  1:12,  0 user,  load average: 0.52, 0.58, 0.59
+Tasks:   4 total,   1 running,   3 sleeping,   0 stopped,   0 zombie
+%Cpu(s):  5.0 us, 11.1 sy,  0.0 ni, 83.9 id,  0.0 wa,  0.0 hi,  0.0 si,  0.0 st
+MiB Mem :   8061.5 total,   3083.6 free,   4977.9 used,    224.0 buff/cache
+MiB Swap:  24576.0 total,  24280.0 free,    296.0 used.   3083.6 avail Mem
+
+  PID USER      PR  NI    VIRT    RES    SHR S  %CPU  %MEM     TIME+ COMMAND
+  226 root      20   0   17352   3888   1648 R   0.3   0.0   0:00.10 top
+    1 root      20   0    8952    328    284 S   0.0   0.0   0:00.21 init
+  196 root      20   0    8952    228    180 S   0.0   0.0   0:00.00 init
+  197 root      20   0   14244   3892   3808 S   0.0   0.0   0:00.24 bash
+
+1.2 - To view the real time memory and cpu utilistion of a process in a more visualised format
+root@mishra-pc:/# htop
+
+2 - MEMORY
+2.1 - To check the memory status of your system 
+root@mishra-pc:/# free -m
+               total        used        free      shared  buff/cache   available
+Mem:            8061        5038        3022          17         223        3022
+Swap:          24576         174       24401
+2.2 - To check the memory status in humanable read format
+root@mishra-pc:/# free -h
+               total        used        free      shared  buff/cache   available
+Mem:           7.9Gi       4.9Gi       3.0Gi        17Mi       223Mi       3.0Gi
+Swap:           24Gi       179Mi        23Gi
+root@mishra-pc:/#
+
+3 - DISC
+3.1 - To check Disc space in your system 
+root@mishra-pc:/# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+rootfs          384G  106G  278G  28% /
+none            384G  106G  278G  28% /dev
+none            384G  106G  278G  28% /run
+none            384G  106G  278G  28% /run/lock
+none            384G  106G  278G  28% /run/shm
+none            384G  106G  278G  28% /run/user
+tmpfs           384G  106G  278G  28% /sys/fs/cgroup
+C:\             384G  106G  278G  28% /mnt/c
+E:\             196G  2.6G  193G   2% /mnt/e
+F:\             176G  673M  176G   1% /mnt/f
+G:\             176G   51G  125G  29% /mnt/g
+root@mishra-pc:/#
+
+3.2 - To check Disc space in a folder
+root@mishra-pc:/tmp# du -sh
+20K     .
+root@mishra-pc:/tmp# du -sh *
+0       changedownerfile.sh
+0       folderfileconcept
+0       helloworld.sh
+20K     python-file.txt
+0       ui
+root@mishra-pc:/tmp#

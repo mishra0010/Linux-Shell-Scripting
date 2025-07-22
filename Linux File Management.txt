@@ -1,0 +1,196 @@
+                                                                           FILE MANAGEMENT IN LINUX
+
+
+1 - To list down the things 
+root@mishra-pc:/# ls
+bin  bin.usr-is-merged  boot  dev  etc  home  init  lib  lib.usr-is-merged  lib64  linux_practice  media  mnt  opt  proc  root  run  sbin  sbin.usr-is-merged  snap  srv  sys  tmp  usr  var
+
+2 - To change a directory 
+root@mishra-pc:/# cd tmp
+root@mishra-pc:/tmp# ls
+root@mishra-pc:/tmp#
+
+3 - To come back one step from thr present folder
+root@mishra-pc:/tmp# cd ..
+root@mishra-pc:/#
+root@mishra-pc:/# cd tmp
+
+4 - To get the present directory where you are
+root@mishra-pc:/tmp# pwd
+/tmp
+root@mishra-pc:/tmp#
+
+5 - To create and remove a directory
+root@mishra-pc:/tmp# mkdir ui
+root@mishra-pc:/tmp# ls
+ui
+root@mishra-pc:/tmp# rmdir ui
+root@mishra-pc:/tmp# ls
+root@mishra-pc:/tmp#
+
+6 - To create and delete a file 
+root@mishra-pc:/tmp# touch ui
+root@mishra-pc:/tmp# ls
+ui
+root@mishra-pc:/tmp# rm ui
+root@mishra-pc:/tmp# ls
+root@mishra-pc:/tmp#
+
+7 - To copy the files
+root@mishra-pc:/tmp# touch ui
+root@mishra-pc:/tmp# cp ui excel
+root@mishra-pc:/tmp# ls
+excel  ui
+
+8 - To rename a file name 
+root@mishra-pc:/tmp# mv excel ui
+root@mishra-pc:/tmp# ls
+ui
+root@mishra-pc:/tmp#
+
+9 - To write into the file 
+root@mishra-pc:/tmp# ls
+ui
+root@mishra-pc:/tmp# vim ui
+press - i to enter the insert mode 
+press - esc to exit insert mode 
+press - : to enter command mode (:wq) -- to save a file 
+
+10 - To vatch the content inside the file
+root@mishra-pc:/tmp# cat ui
+learning linux is super easy
+we learnt
+4 section of linux and
+this is the 5 section learning linux is super easy
+root@mishra-pc:/tmp#
+
+11 = To navigate through lines press 
+:line number (to reach out to the specified line )
+root@mishra-pc:/tmp# vim python-file.txt
+root@mishra-pc:/tmp# cat python-file.txt
+class Person:
+    def __init__(self, name):
+        self.name = name
+    def greet(self):
+        return f'Hi, I am {self.name}'
+for i in range(10):
+    print(i)
+def greet(name):
+    return f'Hello, {name}!'
+import os
+class Counter:
+    count = 0
+    def increment(self):
+        self.count += 1
+class Dog(Animal):
+    def speak(self):
+        return 'Woof!'
+import os
+import random
+def square(x):
+    return x * x
+def add(a, b):
+    return a + b
+with open('file.txt', 'r') as f:
+
+12 - To get a scroll bar kind of thing your file 
+root@mishra-pc:/tmp# less python-file.txt
+-- press q to exit 
+
+13 - To see Last 20 lines of the file
+root@mishra-pc:/tmp# tail -20 python-file.txt
+def square(x):
+    return x * x
+if x > 0:
+    print('Positive')
+else:
+    print('Non-positive')
+class Animal:
+    def __init__(self, name):
+        self.name = name
+def square(x):
+    return x * x
+import random
+class Dog(Animal):
+    def speak(self):
+        return 'Woof!'
+class Math:
+    @staticmethod
+    def add(a, b):
+        return a + b
+import math
+
+12 - To see first 10 line of a file 
+root@mishra-pc:/tmp# head -10 python-file.txt
+class Person:
+    def __init__(self, name):
+        self.name = name
+    def greet(self):
+        return f'Hi, I am {self.name}'
+for i in range(10):
+    print(i)
+def greet(name):
+    return f'Hello, {name}!'
+import os
+
+13 - To see content of the file
+root@mishra-pc:/tmp# cat ui
+learning linux is super easy
+we learnt
+4 section of linux and
+this is the 5 section learning linux is super easy
+
+14 - To see the content of file in reverse order
+root@mishra-pc:/tmp# tac ui
+this is the 5 section learning linux is super easy
+4 section of linux and
+we learnt
+learning linux is super easy
+
+15 - To add direct content into a file without opening editor
+root@mishra-pc:/tmp# echo "New line added by echo command into this file" > ui
+root@mishra-pc:/tmp# cat ui
+New line added by echo command into this file
+
+14 - To avoid overwritting the file , we can use >> symbol , it will add one line in the last
+root@mishra-pc:/tmp# cat ui
+New line added by echo command into this file
+root@mishra-pc:/tmp# echo 'This is the line added by echo as the last line , not overwriting current data' >> ui
+root@mishra-pc:/tmp# cat ui
+New line added by echo command into this file
+This is the line added by echo as the last line , not overwriting current data
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

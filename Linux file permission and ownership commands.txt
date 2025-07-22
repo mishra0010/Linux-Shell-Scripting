@@ -1,0 +1,1387 @@
+                                                                    List of Linux file permission and ownership commands
+
+
+
+
+Note - How to add user using 2 commands ie "useradd" and "adduser"
+
+Great question! Both `useradd` and `adduser` are used to **create users in Linux**, but they have some **important differences** in how they work.
+
+---
+
+### 🔍 **Difference Between `useradd` and `adduser`**
+
+| Feature                  | `useradd`                             | `adduser`                                      |
+| ------------------------ | ------------------------------------- | ---------------------------------------------- |
+| **Type**                 | Low-level command (binary)            | High-level script (Perl/Python)                |
+| **Default Availability** | Available in **all Linux distros**    | Usually available on **Debian/Ubuntu**         |
+| **Interactivity**        | **Non-interactive** (no prompts)      | **Interactive** (asks for input like password) |
+| **Ease of Use**          | Harder (you must specify all options) | Easier (guides you through steps)              |
+| **Customization**        | Requires flags like `-m`, `-d`, etc.  | Automatically handles common settings          |
+| **Example**              | `sudo useradd -m john`                | `sudo adduser john`                            |
+
+---
+
+### 🧪 Examples
+
+#### ✅ `useradd` example (manual):
+
+```bash
+sudo useradd -m -s /bin/bash john
+sudo passwd john
+```
+
+* `-m`: Create home directory
+* `-s`: Set login shell
+* You must **manually set password**, shell, and more.
+
+---
+
+#### ✅ `adduser` example (interactive):
+
+```bash
+sudo adduser john
+```
+
+It will:
+
+* Create the user
+* Create home directory
+* Ask for password
+* Ask for full name, room number, etc. (you can skip by pressing Enter)
+
+---
+
+### 🔧 Which Should You Use?
+
+* ✅ Use **`adduser`** if you're on **Ubuntu/Debian** and want a simple, interactive process.
+* ✅ Use **`useradd`** if you're on **RHEL/CentOS** or need a **scripted/non-interactive** setup (e.g., automation).
+
+---
+
+
+
+root@mishra-pc:~# useradd schiwhaneua
+root@mishra-pc:~# useradd mishrahtua
+root@mishra-pc:~# ls /home
+root@mishra-pc:~# adduser sahilau
+info: Adding user `sahilau' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Adding new group `sahilau' (1004) ...
+info: Adding new user `sahilau' (1004) with group `sahilau (1004)' ...
+info: Creating home directory `/home/sahilau' ...
+info: Copying files from `/etc/skel' ...
+New password:
+Retype new password:
+passwd: password updated successfully
+Changing the user information for sahilau
+Enter the new value, or press ENTER for the default
+        Full Name []:
+        Room Number []:
+        Work Phone []:
+        Home Phone []:
+        Other []:
+
+Is the information correct? [Y/n] info: Adding new user `sahilau' to supplemental / extra groups `users' ...
+info: Adding user `sahilau' to group `users' ...
+root@mishra-pc:~# adduser harshitau
+info: Adding user `harshitau' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Adding new group `harshitau' (1005) ...
+info: Adding new user `harshitau' (1005) with group `harshitau (1005)' ...
+info: Creating home directory `/home/harshitau' ...
+info: Copying files from `/etc/skel' ...
+New password:
+Retype new password:
+passwd: password updated successfully
+Changing the user information for harshitau
+Enter the new value, or press ENTER for the default
+        Full Name []:
+        Room Number []:
+        Work Phone []:
+        Home Phone []:
+        Other []:
+
+info: Adding user `harshitau' to group `users' ...
+
+
+root@mishra-pc:~# ls /home
+harshitau  sahilau
+root@mishra-pc:~# sudo harshitau
+sudo: harshitau: command not found
+root@mishra-pc:~# su harshitau
+harshitau@mishra-pc:/root$ cd ~
+harshitau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# su schiwhaneua
+$ exit
+root@mishra-pc:~# sudo useradd -m -s /bin/bash sidnaikua
+root@mishra-pc:~# ls /home
+harshitau  sahilau  sidnaikua
+
+root@mishra-pc:~# su sidnaikua
+sidnaikua@mishra-pc:/root$
+
+
+
+====================================================================================================================================================================================
+
+
+1. ls -l — View Permissions and Ownership
+
+Description:
+Displays detailed information about files, including permissions, owner, and group.
+
+
+Example:
+
+ls -l file.txt
+
+=========================================================================================================================================================================================
+
+
+🛠️ 2. chmod — Change File Permissions
+Description:
+Changes permissions (read, write, execute) for user, group, and others.
+
+Syntax:
+bash
+Copy
+Edit
+chmod [permissions] [file]
+Methods:
+a. Symbolic Mode:
+bash
+Copy
+Edit
+chmod u+x file.sh     # Add execute for user
+chmod g-w file.txt    # Remove write for group
+chmod o=r file.txt    # Set read only for others
+b. Numeric Mode:
+bash
+Copy
+Edit
+chmod 755 script.sh
+Numeric Breakdown:
+Value	Permission
+7	rwx
+6	rw-
+5	r-x
+4	r--
+0	---
+
+Example:
+bash
+Copy
+Edit
+chmod 644 file.txt   # rw-r--r--
+chmod 700 secret.txt # rwx------
+
+
+
+
+root@mishra-pc:~# ls /home
+harshitau  sahilau  sidnaikua
+root@mishra-pc:~# su harshitau
+harshitau@mishra-pc:/root$ nano test1.txt
+harshitau@mishra-pc:/root$ touch test1.txt
+touch: cannot touch 'test1.txt': Permission denied
+harshitau@mishra-pc:/root$ sudo nano test1.txt
+[sudo] password for harshitau:
+harshitau is not in the sudoers file.
+harshitau@mishra-pc:/root$ ls ltr
+ls: cannot access 'ltr': Permission denied
+harshitau@mishra-pc:/root$ ls -ltr
+ls: cannot open directory '.': Permission denied
+harshitau@mishra-pc:/root$ cd ~
+harshitau@mishra-pc:~$ sudo nano test1.txt
+[sudo] password for harshitau:
+harshitau is not in the sudoers file.
+harshitau@mishra-pc:~$ ls ltr
+ls: cannot access 'ltr': No such file or directory
+harshitau@mishra-pc:~$ ls -ltr
+total 0
+harshitau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# usermod -aG sudo harshitau
+root@mishra-pc:~# su harshitau
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+harshitau@mishra-pc:/root$ cd ~
+harshitau@mishra-pc:~$ ls -ltr
+total 0
+harshitau@mishra-pc:~$ touch test1.txt
+harshitau@mishra-pc:~$ nano test1.txt
+harshitau@mishra-pc:~$ ls
+test1.txt
+harshitau@mishra-pc:~$ cat test1.txt
+Naino me sajna
+sajno me sapna
+sapne me oggy
+
+harshitau@mishra-pc:~$ ls -l
+total 0
+-rw-rw-r-- 1 harshitau harshitau 48 Jun  5 13:13 test1.txt
+harshitau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# su sahilau
+sahilau@mishra-pc:/root$ ls -l
+ls: cannot open directory '.': Permission denied
+sahilau@mishra-pc:/root$ cd ~
+sahilau@mishra-pc:~$ ls -l
+total 0
+sahilau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# su harshitau
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+harshitau@mishra-pc:/root$ cd ~
+harshitau@mishra-pc:~$ chmod 777 test1.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+-rwxrwxrwx 1 harshitau harshitau 48 Jun  5 13:13 test1.txt
+harshitau@mishra-pc:~$ chmod 077 test1.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 48 Jun  5 13:13 test1.txt
+harshitau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# nano /home/harshitau/test1.txt
+root@mishra-pc:~# cat /home/harshitau/test1.txt
+in n sd sd msa m sdsdnmNaino me sajna
+sajno me sapna
+sapne me oggy
+
+root@mishra-pc:~# su sahilau
+sahilau@mishra-pc:/root$ cd ~
+sahilau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# su harshitau
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+harshitau@mishra-pc:/root$ cd ~
+harshitau@mishra-pc:~$ chmod 070 test1.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwx--- 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+harshitau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# su s
+sahilau           sidnaikua         sys               systemd-network   systemd-timesync
+schiwhaneua       sync              syslog            systemd-resolve
+root@mishra-pc:~# su sahilau
+sahilau@mishra-pc:/root$ cd ~
+sahilau@mishra-pc:~$ nano /home/harshitau/test1.txt
+sahilau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# su harshitau
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+harshitau@mishra-pc:/root$ cd ~
+harshitau@mishra-pc:~$ chmod 077 test1.txt
+harshitau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# su sahilau
+sahilau@mishra-pc:/root$ cd ~
+sahilau@mishra-pc:~$ nano /home/harshitau/test1.txt
+sahilau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# usermod -aG sudo sahilau
+root@mishra-pc:~# ls -l
+total 0
+drwxr-xr-x 1 root root 4096 Jun  4 14:07 LINUX_PRAC
+drwxr-xr-x 1 root root 4096 Jun  4 14:32 linux_practice
+root@mishra-pc:~# su sahilau
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+sahilau@mishra-pc:/root$ cd ~
+sahilau@mishra-pc:~$ nano /home/harshitau/test1.txt
+sahilau@mishra-pc:~$ nano test2.txt
+sahilau@mishra-pc:~$ nano /home/harshitau/test1.txt
+sahilau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# usermod -aG sahilau harshitau
+root@mishra-pc:~# ls -l
+total 0
+drwxr-xr-x 1 root root 4096 Jun  4 14:07 LINUX_PRAC
+drwxr-xr-x 1 root root 4096 Jun  4 14:32 linux_practice
+root@mishra-pc:~# su sahilau
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+sahilau@mishra-pc:/root$ cd ~
+sahilau@mishra-pc:~$ ls -l
+total 0
+-rw-rw-r-- 1 sahilau sahilau 36 Jun  5 13:31 test2.txt
+sahilau@mishra-pc:~$ chmod 077 test2.txt
+sahilau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 sahilau sahilau 36 Jun  5 13:31 test2.txt
+sahilau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# su harshitau
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+harshitau@mishra-pc:/root$ cd ~
+harshitau@mishra-pc:~$ nano /home/sahilau/test2.txt
+harshitau@mishra-pc:~$ cat /home/sahilau/test2.txt
+gafoftyaf
+kuch
+to
+bada
+ho
+raha
+hai
+harshitau@mishra-pc:~$ nano /home/sahilau/test2.txt
+harshitau@mishra-pc:~$ cat /home/sahilau/test2.txt
+ibdghlde gafoftyaf
+kuch
+to
+bada
+ho
+raha
+hai
+harshitau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# ls -l
+total 0
+drwxr-xr-x 1 root root 4096 Jun  4 14:07 LINUX_PRAC
+drwxr-xr-x 1 root root 4096 Jun  4 14:32 linux_practice
+root@mishra-pc:~# ls -ltr
+total 0
+drwxr-xr-x 1 root root 4096 Jun  4 14:07 LINUX_PRAC
+drwxr-xr-x 1 root root 4096 Jun  4 14:32 linux_practice
+root@mishra-pc:~# ls /home
+harshitau  sahilau  sidnaikua
+root@mishra-pc:~# groupadd grpD
+root@mishra-pc:~# ls /home
+harshitau  sahilau  sidnaikua
+root@mishra-pc:~# ls -l
+total 0
+drwxr-xr-x 1 root root 4096 Jun  4 14:07 LINUX_PRAC
+drwxr-xr-x 1 root root 4096 Jun  4 14:32 linux_practice
+root@mishra-pc:~# ls -ltr
+total 0
+drwxr-xr-x 1 root root 4096 Jun  4 14:07 LINUX_PRAC
+drwxr-xr-x 1 root root 4096 Jun  4 14:32 linux_practice
+root@mishra-pc:~# cat /etc/group
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:syslog
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:
+floppy:x:25:
+tape:x:26:
+sudo:x:27:harshitau,sahilau
+audio:x:29:
+dip:x:30:
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+shadow:x:42:
+utmp:x:43:
+video:x:44:
+sasl:x:45:
+plugdev:x:46:
+staff:x:50:
+games:x:60:
+users:x:100:sahilau,harshitau
+nogroup:x:65534:
+systemd-journal:x:999:
+systemd-network:x:998:
+crontab:x:997:
+systemd-timesync:x:996:
+input:x:995:
+sgx:x:994:
+kvm:x:993:
+render:x:992:
+messagebus:x:101:
+syslog:x:102:
+systemd-resolve:x:991:
+uuidd:x:103:
+_ssh:x:104:
+landscape:x:105:
+polkitd:x:990:
+admin:x:106:
+netdev:x:107:
+hmishra:x:1000:
+devops:x:1003:hmishra
+schiwhaneua:x:1001:
+mishrahtua:x:1002:
+sahilau:x:1004:harshitau
+harshitau:x:1005:
+sidnaikua:x:1006:
+grpD:x:1007:
+root@mishra-pc:~# su harshitau
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+harshitau@mishra-pc:/root$ cd ~
+harshitau@mishra-pc:~$ nano test3.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+-rw-rw-r-- 1 harshitau harshitau 97 Jun  5 13:57 test3.txt
+harshitau@mishra-pc:~$ chmod o+rwx test3.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+-rw-rw-rwx 1 harshitau harshitau 97 Jun  5 13:57 test3.txt
+harshitau@mishra-pc:~$ chmod g=rwx test3.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+-rw-rwxrwx 1 harshitau harshitau 97 Jun  5 13:57 test3.txt
+harshitau@mishra-pc:~$ chmod g-x test3.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+-rw-rw-rwx 1 harshitau harshitau 97 Jun  5 13:57 test3.txt
+harshitau@mishra-pc:~$ chmod 333 test3.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+--wx-wx-wx 1 harshitau harshitau 97 Jun  5 13:57 test3.txt
+harshitau@mishra-pc:~$ chmod 222 tets3
+chmod: cannot access 'tets3': No such file or directory
+harshitau@mishra-pc:~$ chmod 222 test3.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+--w--w--w- 1 harshitau harshitau 97 Jun  5 13:57 test3.txt
+harshitau@mishra-pc:~$ chmod 777 test3.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+-rwxrwxrwx 1 harshitau harshitau 97 Jun  5 13:57 test3.txt
+harshitau@mishra-pc:~$ chmod 222 test3.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+--w--w--w- 1 harshitau harshitau 97 Jun  5 13:57 test3.txt
+harshitau@mishra-pc:~$ chmod 777 test3.txt
+harshitau@mishra-pc:~$ chmod 111 test3.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+---x--x--x 1 harshitau harshitau 97 Jun  5 13:57 test3.txt
+harshitau@mishra-pc:~$ chmod 777 test3.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+-rwxrwxrwx 1 harshitau harshitau 97 Jun  5 13:57 test3.txt
+harshitau@mishra-pc:~$ chmod 000 test3.txt
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+---------- 1 harshitau harshitau 97 Jun  5 13:57 test3.txt
+harshitau@mishra-pc:~$
+
+
+
+
+========================================================================================================================================================================
+
+👤 3. chown — Change File Owner
+Description:
+Changes file owner and optionally the group.
+
+Syntax:
+bash
+Copy
+Edit
+chown [owner][:group] file
+Examples:
+bash
+Copy
+Edit
+chown h_m file.txt          # Change owner to 'h_m'
+chown h_m:devops file.txt   # Change owner and group
+
+
+
+
+
+
+root@mishra-pc:~# ls /etc
+PackageKit              cron.daily      fstab       kernel          mime.types           polkit-1      sensors.d          systemd
+X11                     cron.hourly     fuse.conf   landscape       mke2fs.conf          profile       sensors3.conf      terminfo
+adduser.conf            cron.monthly    gai.conf    ld.so.cache     modprobe.d           profile.d     services           timezone
+alternatives            cron.weekly     glvnd       ld.so.conf      modules              protocols     sgml               tmpfiles.d
+apparmor                cron.yearly     gnutls      ld.so.conf.d    modules-load.d       python3       shadow             ubuntu-advantage
+apparmor.d              crontab         gprofng.rc  ldap            mtab                 python3.12    shadow-            ucf.conf
+apport                  dbus-1          groff       legal           nanorc               rc0.d         shells             udev
+apt                     dconf           group       libaudit.conf   netconfig            rc1.d         skel               update-manager
+bash.bashrc             debconf.conf    group-      locale.alias    netplan              rc2.d         ssh                update-motd.d
+bash_completion         debian_version  gshadow     locale.conf     networkd-dispatcher  rc3.d         ssl                vconsole.conf
+bash_completion.d       default         gshadow-    locale.gen      networks             rc4.d         subgid             vim
+bindresvport.blacklist  deluser.conf    gss         localtime       newt                 rc5.d         subgid-            vtrgb
+binfmt.d                depmod.d        gtk-3.0     logcheck        nsswitch.conf        rc6.d         subuid             vulkan
+byobu                   dhcp            host.conf   login.defs      opt                  rcS.d         subuid-            wgetrc
+ca-certificates         dhcpcd.conf     hostname    logrotate.conf  os-release           resolv.conf   sudo.conf          wsl.conf
+ca-certificates.conf    dpkg            hosts       logrotate.d     pam.conf             rmt           sudo_logsrvd.conf  xattr.conf
+cloud                   e2scrub.conf    init.d      lsb-release     pam.d                rpc           sudoers            xdg
+console-setup           environment     inputrc     machine-id      passwd               rsyslog.conf  sudoers.d          xml
+credstore               environment.d   iproute2    magic           passwd-              rsyslog.d     supercat           zsh_command_not_found
+credstore.encrypted     ethertypes      issue       magic.mime      perl                 security      sysctl.conf
+cron.d                  fonts           issue.net   manpath.config  pm                   selinux       sysctl.d
+root@mishra-pc:~# cd /etc/group
+-bash: cd: /etc/group: Not a directory
+root@mishra-pc:~# cd /root/etc/group
+-bash: cd: /root/etc/group: No such file or directory
+root@mishra-pc:~# pwd
+/root
+root@mishra-pc:~# ls /etc/group
+/etc/group
+root@mishra-pc:~# ls -l /etc/group
+-rw-r--r-- 1 root root 898 Jun  5 13:39 /etc/group
+root@mishra-pc:~# ls -l /etc/group/devops
+ls: cannot access '/etc/group/devops': Not a directory
+root@mishra-pc:~# groups
+root
+root@mishra-pc:~# cat /etc/group
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:syslog
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:
+floppy:x:25:
+tape:x:26:
+sudo:x:27:harshitau,sahilau
+audio:x:29:
+dip:x:30:
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+shadow:x:42:
+utmp:x:43:
+video:x:44:
+sasl:x:45:
+plugdev:x:46:
+staff:x:50:
+games:x:60:
+users:x:100:sahilau,harshitau
+nogroup:x:65534:
+systemd-journal:x:999:
+systemd-network:x:998:
+crontab:x:997:
+systemd-timesync:x:996:
+input:x:995:
+sgx:x:994:
+kvm:x:993:
+render:x:992:
+messagebus:x:101:
+syslog:x:102:
+systemd-resolve:x:991:
+uuidd:x:103:
+_ssh:x:104:
+landscape:x:105:
+polkitd:x:990:
+admin:x:106:
+netdev:x:107:
+hmishra:x:1000:
+devops:x:1003:hmishra
+schiwhaneua:x:1001:
+mishrahtua:x:1002:
+sahilau:x:1004:harshitau
+harshitau:x:1005:
+sidnaikua:x:1006:
+grpD:x:1007:
+root@mishra-pc:~# ls -l devops
+ls: cannot access 'devops': No such file or directory
+root@mishra-pc:~# touch /etc/group/devops test4.txt
+touch: cannot touch '/etc/group/devops': Not a directory
+root@mishra-pc:~# touch /etc/group/devops/test4.txt
+touch: cannot touch '/etc/group/devops/test4.txt': Not a directory
+root@mishra-pc:~# su sahilau
+To run a command as administrator (user "root"), use "sudo <command>".
+See "man sudo_root" for details.
+
+sahilau@mishra-pc:/root$ cd ~
+sahilau@mishra-pc:~$ chown harshitau test2.txt
+chown: changing ownership of 'test2.txt': Operation not permitted
+sahilau@mishra-pc:~$ sudo chown harshitau test2.txt
+[sudo] password for sahilau:
+sahilau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau sahilau 45 Jun  5 13:37 test2.txt
+sahilau@mishra-pc:~$ cat test2.txt
+ibdghlde gafoftyaf
+kuch
+to
+bada
+ho
+raha
+hai
+sahilau@mishra-pc:~$ chmod 777 test2.txt
+chmod: changing permissions of 'test2.txt': Operation not permitted
+sahilau@mishra-pc:~$ sudo chmod 777 test2.txt
+sahilau@mishra-pc:~$ ls -l
+total 0
+-rwxrwxrwx 1 harshitau sahilau 45 Jun  5 13:37 test2.txt
+sahilau@mishra-pc:~$ sudo chown sahilau test2.txt
+sahilau@mishra-pc:~$ ls -l
+total 0
+-rwxrwxrwx 1 sahilau sahilau 45 Jun  5 13:37 test2.txt
+sahilau@mishra-pc:~$ cd ~
+sahilau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# chown sahilau test2.txt
+chown: cannot access 'test2.txt': No such file or directory
+root@mishra-pc:~# chown /home/sahilau test2.txt
+chown: invalid user: ‘/home/sahilau’
+root@mishra-pc:~# chown /root/home/sahilau test2.txt
+chown: invalid user: ‘/root/home/sahilau’
+root@mishra-pc:~# pwd
+/root
+root@mishra-pc:~# su sahilau
+sahilau@mishra-pc:/root$ cd ~
+sahilau@mishra-pc:~$ pwd
+/home/sahilau
+sahilau@mishra-pc:~$ cd ~
+sahilau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# chown sahilau /root/sahilau/test2.txt
+chown: cannot access '/root/sahilau/test2.txt': No such file or directory
+root@mishra-pc:~# sudo chown sahilau /root/sahilau/test2.txt
+chown: cannot access '/root/sahilau/test2.txt': No such file or directory
+root@mishra-pc:~# su sahilau
+sahilau@mishra-pc:/root$ cd ~
+sahilau@mishra-pc:~$ ls -l test2.txt
+-rwxrwxrwx 1 sahilau sahilau 45 Jun  5 13:37 test2.txt
+sahilau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# sudo chown sahilau /root/sahilau/test2.txtsudo chown sahilau /root/sahilau/test2.txt
+chown: cannot access '/root/sahilau/test2.txtsudo': No such file or directory
+chown: cannot access 'chown': No such file or directory
+chown: cannot access 'sahilau': No such file or directory
+chown: cannot access '/root/sahilau/test2.txt': No such file or directory
+root@mishra-pc:~# sudo chown sahilau /root/sahilau/test2.txt
+chown: cannot access '/root/sahilau/test2.txt': No such file or directory
+root@mishra-pc:~# sudo chown newuser /home/sahilau/test2.txt
+chown: invalid user: ‘newuser’
+root@mishra-pc:~# sudo chown harshitau /home/sahilau/test2.txt
+root@mishra-pc:~# su sahilau
+sahilau@mishra-pc:/root$ cd ~
+sahilau@mishra-pc:~$ ls -l
+total 0
+-rwxrwxrwx 1 harshitau sahilau 45 Jun  5 13:37 test2.txt
+sahilau@mishra-pc:~$ chmod 111 test2.txt
+chmod: changing permissions of 'test2.txt': Operation not permitted
+sahilau@mishra-pc:~$ sudo chmod 111 test2.txt
+sahilau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# ls /home
+harshitau  sahilau  sidnaikua
+root@mishra-pc:~# chown sidnaikua /home/sahilau/test2.txt
+root@mishra-pc:~# su sidnaikua
+sidnaikua@mishra-pc:/root$ cd ~
+sidnaikua@mishra-pc:~$ cat test2.txt
+cat: test2.txt: No such file or directory
+sidnaikua@mishra-pc:~$ cat /home/sahilau/test2.txt
+cat: /home/sahilau/test2.txt: Permission denied
+sidnaikua@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# sudo chmod o+r /home/sahilau/test2.txt
+root@mishra-pc:~# su s
+sahilau           sidnaikua         sys               systemd-network   systemd-timesync
+schiwhaneua       sync              syslog            systemd-resolve
+root@mishra-pc:~# su s
+sahilau           sidnaikua         sys               systemd-network   systemd-timesync
+schiwhaneua       sync              syslog            systemd-resolve
+root@mishra-pc:~# su sidnaikua
+sidnaikua@mishra-pc:/root$ cd ~
+sidnaikua@mishra-pc:~$ cat /home/sahilau/test2.txt
+cat: /home/sahilau/test2.txt: Permission denied
+sidnaikua@mishra-pc:~$ sudo cat /home/sahilau/test2.txt
+[sudo] password for sidnaikua:
+Sorry, try again.
+[sudo] password for sidnaikua:
+Sorry, try again.
+[sudo] password for sidnaikua:
+sudo: 3 incorrect password attempts
+sidnaikua@mishra-pc:~$ sudo cat /home/sahilau/test2.txt
+[sudo] password for sidnaikua:
+Sorry, try again.
+[sudo] password for sidnaikua:
+Sorry, try again.
+[sudo] password for sidnaikua:
+sudo: 3 incorrect password attempts
+sidnaikua@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# sudo chmod 777 /home/sahilau/test2.txt
+root@mishra-pc:~# su sidnaikua
+sidnaikua@mishra-pc:/root$ cd ~
+sidnaikua@mishra-pc:~$ cat /home/sahilau/test2.txt
+cat: /home/sahilau/test2.txt: Permission denied
+sidnaikua@mishra-pc:~$ sudo chmod o+x /home/sahilau
+[sudo] password for sidnaikua:
+
+
+
+
+
+Sorry, try again.
+[sudo] password for sidnaikua:
+Sorry, try again.
+[sudo] password for sidnaikua:
+sudo: 3 incorrect password attempts
+sidnaikua@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# sudo chmod o+x /home/sahilau
+root@mishra-pc:~# su sidnaikua
+sidnaikua@mishra-pc:/root$ cd ~
+sidnaikua@mishra-pc:~$ cat /home/sahilau/test2.txt
+ibdghlde gafoftyaf
+kuch
+to
+bada
+ho
+raha
+hai
+sidnaikua@mishra-pc:~$ echo "bhk bhkk bhkkkkkkkkkkk" > /home/sahilau/test2.txt
+sidnaikua@mishra-pc:~$ cat /home/sahilau/test2.txt
+bhk bhkk bhkkkkkkkkkkk
+sidnaikua@mishra-pc:~$
+
+
+
+'
+root@mishra-pc:~# chown sidnaikua /home/harshitau/test3.txt
+root@mishra-pc:~# ls -l /home/harshitau/test3.txt
+-rwxrwxrwx 1 sidnaikua harshitau 97 Jun  5 13:57 /home/harshitau/test3.txt
+root@mishra-pc:~# su harshitau
+harshitau@mishra-pc:/root$ cd ~
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+-rwxrwxrwx 1 sidnaikua harshitau 97 Jun  5 13:57 test3.txt
+harshitau@mishra-pc:~$ chmod 555 test3.txt
+chmod: changing permissions of 'test3.txt': Operation not permitted
+harshitau@mishra-pc:~$ exit
+exit
+'
+
+
+
+
+
+
+
+
+==========================================================================================================================================================================
+
+
+
+👥 4. chgrp — Change Group Ownership
+
+
+Description:
+Changes the group ownership of a file.
+
+Syntax:
+
+chgrp [group] file
+Example:
+
+chgrp devops file.txt   # Changes group to 'devops'
+
+
+
+
+
+
+root@mishra-pc:~# groupadd GroupD
+root@mishra-pc:~# cat /etc/group
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:syslog
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:
+floppy:x:25:
+tape:x:26:
+sudo:x:27:harshitau,sahilau
+audio:x:29:
+dip:x:30:
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+shadow:x:42:
+utmp:x:43:
+video:x:44:
+sasl:x:45:
+plugdev:x:46:
+staff:x:50:
+games:x:60:
+users:x:100:sahilau,harshitau
+nogroup:x:65534:
+systemd-journal:x:999:
+systemd-network:x:998:
+crontab:x:997:
+systemd-timesync:x:996:
+input:x:995:
+sgx:x:994:
+kvm:x:993:
+render:x:992:
+messagebus:x:101:
+syslog:x:102:
+systemd-resolve:x:991:
+uuidd:x:103:
+_ssh:x:104:
+landscape:x:105:
+polkitd:x:990:
+admin:x:106:
+netdev:x:107:
+hmishra:x:1000:
+devops:x:1003:hmishra
+schiwhaneua:x:1001:
+mishrahtua:x:1002:
+sahilau:x:1004:harshitau
+harshitau:x:1005:
+sidnaikua:x:1006:
+grpD:x:1007:
+GroupD:x:1008:
+root@mishra-pc:~# chgrp GroupD GroupC
+chgrp: cannot access 'GroupC': No such file or directory
+root@mishra-pc:~# chgrp GroupD /home/harshitau/test3.txt
+root@mishra-pc:~# cat /etc/group
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:syslog
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:
+floppy:x:25:
+tape:x:26:
+sudo:x:27:harshitau,sahilau
+audio:x:29:
+dip:x:30:
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+shadow:x:42:
+utmp:x:43:
+video:x:44:
+sasl:x:45:
+plugdev:x:46:
+staff:x:50:
+games:x:60:
+users:x:100:sahilau,harshitau
+nogroup:x:65534:
+systemd-journal:x:999:
+systemd-network:x:998:
+crontab:x:997:
+systemd-timesync:x:996:
+input:x:995:
+sgx:x:994:
+kvm:x:993:
+render:x:992:
+messagebus:x:101:
+syslog:x:102:
+systemd-resolve:x:991:
+uuidd:x:103:
+_ssh:x:104:
+landscape:x:105:
+polkitd:x:990:
+admin:x:106:
+netdev:x:107:
+hmishra:x:1000:
+devops:x:1003:hmishra
+schiwhaneua:x:1001:
+mishrahtua:x:1002:
+sahilau:x:1004:harshitau
+harshitau:x:1005:
+sidnaikua:x:1006:
+grpD:x:1007:
+GroupD:x:1008:
+root@mishra-pc:~# su h
+harshitau  hmishra
+root@mishra-pc:~# su h
+harshitau  hmishra
+root@mishra-pc:~# su harshitau
+harshitau@mishra-pc:/root$ cd ~
+harshitau@mishra-pc:~$ ls -l
+total 0
+----rwxrwx 1 harshitau harshitau 71 Jun  5 13:21 test1.txt
+-rwxrwxrwx 1 sidnaikua GroupD    97 Jun  5 13:57 test3.txt
+harshitau@mishra-pc:~$
+
+
+
+
+
+
+=============================================================================================================================================================================
+
+
+
+
+
+
+
+5. umask — Default Permission Setting (Detailed Explanation)
+🔍 What is umask?
+umask, short for user file creation mode mask, is a command and a setting in Unix/Linux systems that controls the default permissions given to newly created files and directories. Instead of directly assigning permissions, it subtracts permissions from a system-wide default.
+
+🧠 How It Works:
+➤ Default Permissions
+When a file or directory is created, the system uses default permission values:
+
+Files: 666 (read and write for everyone)
+
+Directories: 777 (read, write, and execute for everyone)
+
+⚠️ Why not 777 for files? Because execute (x) is usually removed from regular files by default unless explicitly needed (e.g., scripts).
+
+➤ umask Subtracts from the Defaults
+The umask value is subtracted (bitwise) from the default permissions to determine the actual permissions given.
+
+For example:
+
+Default file permission: 666
+
+umask: 022
+
+Final file permission: 666 - 022 = 644 → rw-r--r--
+
+🧮 Bitwise Subtraction (Simplified)
+Let's break down a common example:
+
+Type	Default	umask	Result	Meaning
+File	666	022	644	rw-r--r--
+Directory	777	022	755	rwxr-xr-x
+
+A umask of 022 removes the write permission from group and others.
+
+🧪 Real-World Examples
+Example 1: Check Current umask
+bash
+Copy
+Edit
+$ umask
+0022
+This means:
+
+Owner: full permissions (read + write)
+
+Group/Others: read-only
+
+Example 2: Temporarily Change umask
+bash
+Copy
+Edit
+$ umask 007
+New files will now have:
+
+File: 666 - 007 = 660 → rw-rw----
+
+Directory: 777 - 007 = 770 → rwxrwx---
+
+This is useful when working in a team where group collaboration is needed, but others outside the group should not access files.
+
+Example 3: Make it Permanent
+To make the change persistent, add to shell config files:
+
+For Bash users, add this to ~/.bashrc or ~/.profile:
+
+bash
+Copy
+Edit
+umask 027
+🔐 Security Implications
+The umask setting is important for controlling access and protecting files by default:
+
+Use Case	Recommended umask
+Personal system	022 (default)
+Multi-user system	027 or 077
+Collaborative project	002
+
+📋 Summary Table
+umask	File Permissions	Directory Permissions	Use Case
+022	644	755	Standard personal use
+027	640	750	Secure group collaboration
+077	600	700	Maximum privacy (user only)
+002	664	775	Group-writable collaboration
+
+🧩 Final Notes
+umask does not affect existing files — only new ones.
+
+It’s a preventative measure to avoid overly open permissions.
+
+Combine umask with groups, ACLs, and permissions for fine-grained security.
+
+
+
+
+
+
+
+
+
+harshitau@mishra-pc:~$ exit
+exit
+root@mishra-pc:~# adduser manimeow
+info: Adding user `manimeow' ...
+info: Selecting UID/GID from range 1000 to 59999 ...
+info: Adding new group `manimeow' (1009) ...
+info: Adding new user `manimeow' (1009) with group `manimeow (1009)' ...
+info: Creating home directory `/home/manimeow' ...
+info: Copying files from `/etc/skel' ...
+New password:
+Retype new password:
+passwd: password updated successfully
+Changing the user information for manimeow
+Enter the new value, or press ENTER for the default
+        Full Name []:
+        Room Number []:
+        Work Phone []:
+        Home Phone []:
+        Other []:
+Is the information correct? [Y/n]
+info: Adding new user `manimeow' to supplemental / extra groups `users' ...
+info: Adding user `manimeow' to group `users' ...
+root@mishra-pc:~# su manimeow
+manimeow@mishra-pc:/root$ cd ~
+manimeow@mishra-pc:~$ mkdir shrinkange
+manimeow@mishra-pc:~$ cd shrinkange/
+manimeow@mishra-pc:~/shrinkange$ nano Himansi.txt
+manimeow@mishra-pc:~/shrinkange$ cat Himansi.txt
+Hi
+Mansi
+Can
+You Come
+To my
+Cabin
+
+manimeow@mishra-pc:~/shrinkange$ ls -l
+total 0
+-rw-rw-r-- 1 manimeow manimeow 41 Jun  7 08:38 Himansi.txt
+manimeow@mishra-pc:~/shrinkange$ umask 022
+manimeow@mishra-pc:~/shrinkange$ nano Nomansi.txt
+manimeow@mishra-pc:~/shrinkange$ cat Nomansi.txt
+Hi
+you can't
+take leaves
+on
+holi
+manimeow@mishra-pc:~/shrinkange$ ls -l
+total 0
+-rw-rw-r-- 1 manimeow manimeow 41 Jun  7 08:38 Himansi.txt
+-rw-r--r-- 1 manimeow manimeow 37 Jun  7 08:40 Nomansi.txt
+manimeow@mishra-pc:~/shrinkange$
+
+
+
+
+
+
+
+
+============================================================================================================================================================================================
+
+
+
+
+🧾 6. stat — Detailed File Info
+Description:
+Shows detailed metadata of a file, including permissions, UID, GID.
+
+Example:
+
+stat file.txt
+
+
+
+
+
+manimeow@mishra-pc:~/shrinkange$ stat Himansi.txt
+  File: Himansi.txt
+  Size: 41              Blocks: 0          IO Block: 4096   regular file
+Device: 0,2     Inode: 34339947158771363  Links: 1
+Access: (0664/-rw-rw-r--)  Uid: ( 1009/manimeow)   Gid: ( 1009/manimeow)
+Access: 2025-06-07 08:38:27.186673100 +0000
+Modify: 2025-06-07 08:38:14.986450900 +0000
+Change: 2025-06-07 08:38:14.986450900 +0000
+ Birth: -
+manimeow@mishra-pc:~/shrinkange$ stat -h  Himansi.txt
+stat: invalid option -- 'h'
+Try 'stat --help' for more information.
+manimeow@mishra-pc:~/shrinkange$ cd ~
+manimeow@mishra-pc:~$ stat shrinkange
+  File: shrinkange
+  Size: 4096            Blocks: 0          IO Block: 4096   directory
+Device: 0,2     Inode: 30962247438243489  Links: 1
+Access: (0775/drwxrwxr-x)  Uid: ( 1009/manimeow)   Gid: ( 1009/manimeow)
+Access: 2025-06-07 08:45:46.295021500 +0000
+Modify: 2025-06-07 08:40:09.666896400 +0000
+Change: 2025-06-07 08:40:09.666896400 +0000
+ Birth: -
+manimeow@mishra-pc:~$
+
+
+
+
+====================================================================================================================================================================
+
+
+
+
+🧪 Mini Exercise:
+
+touch demo.txt
+chmod 600 demo.txt
+chown root:root demo.txt
+ls -l demo.txt
+You should see:
+
+diff
+Copy
+Edit
+-rw------- 1 root root 0 Jun 5 16:00 demo.txt
+
+
+
+
+
+root@mishra-pc:~# ls -l
+total 0
+drwxr-xr-x 1 root root 4096 Jun  4 14:07 LINUX_PRAC
+drwxr-xr-x 1 root root 4096 Jun  4 14:32 linux_practice
+-rw-r--r-- 1 root root    0 Jun  5 14:19 test4.txt
+root@mishra-pc:~# chmod 600 test4.txt
+root@mishra-pc:~# ls -l
+total 0
+drwxr-xr-x 1 root root 4096 Jun  4 14:07 LINUX_PRAC
+drwxr-xr-x 1 root root 4096 Jun  4 14:32 linux_practice
+-rw------- 1 root root    0 Jun  5 14:19 test4.txt
+root@mishra-pc:~# chown root:GroupD test4.txt
+root@mishra-pc:~# cat /etc/group
+root:x:0:
+daemon:x:1:
+bin:x:2:
+sys:x:3:
+adm:x:4:syslog
+tty:x:5:
+disk:x:6:
+lp:x:7:
+mail:x:8:
+news:x:9:
+uucp:x:10:
+man:x:12:
+proxy:x:13:
+kmem:x:15:
+dialout:x:20:
+fax:x:21:
+voice:x:22:
+cdrom:x:24:
+floppy:x:25:
+tape:x:26:
+sudo:x:27:harshitau,sahilau
+audio:x:29:
+dip:x:30:
+www-data:x:33:
+backup:x:34:
+operator:x:37:
+list:x:38:
+irc:x:39:
+src:x:40:
+shadow:x:42:
+utmp:x:43:
+video:x:44:
+sasl:x:45:
+plugdev:x:46:
+staff:x:50:
+games:x:60:
+users:x:100:sahilau,harshitau,manimeow
+nogroup:x:65534:
+systemd-journal:x:999:
+systemd-network:x:998:
+crontab:x:997:
+systemd-timesync:x:996:
+input:x:995:
+sgx:x:994:
+kvm:x:993:
+render:x:992:
+messagebus:x:101:
+syslog:x:102:
+systemd-resolve:x:991:
+uuidd:x:103:
+_ssh:x:104:
+landscape:x:105:
+polkitd:x:990:
+admin:x:106:
+netdev:x:107:
+hmishra:x:1000:
+devops:x:1003:hmishra
+schiwhaneua:x:1001:
+mishrahtua:x:1002:
+sahilau:x:1004:harshitau
+harshitau:x:1005:
+sidnaikua:x:1006:
+grpD:x:1007:
+GroupD:x:1008:
+manimeow:x:1009:
+root@mishra-pc:~# ls -l
+total 0
+drwxr-xr-x 1 root root   4096 Jun  4 14:07 LINUX_PRAC
+drwxr-xr-x 1 root root   4096 Jun  4 14:32 linux_practice
+-rw------- 1 root GroupD    0 Jun  5 14:19 test4.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
